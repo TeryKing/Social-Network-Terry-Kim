@@ -24,7 +24,7 @@ const usersController ={
         .select('-__v')
         .then(dbUsersData => {
             if(!dbUsersData) {
-                res.status(404).json({message: 'No User with this particular ID!'});
+                res.status(404).json({message: 'No User found!'});
                 return; 
             }
             res.json(dbUsersData)
@@ -39,7 +39,7 @@ const usersController ={
         Users.findOneAndUpdate({_id: params.id}, body, {new: true, runValidators: true})
         .then(dbUsersData => {
             if(!dbUsersData) {
-                res.status(404).json({message: 'No User with this particular ID!'});
+                res.status(404).json({message: 'No User found!'});
                 return;
             }
             res.json(dbUserData);
@@ -51,13 +51,42 @@ const usersController ={
         Users.findOneAndDelete({_id: params.id})
         .then(dbUsersData => {
             if(!dbUsersData) {
-                res.status(404).json({message: 'No User with this particular ID!'});
+                res.status(404).json({message: 'No User found!'});
                 return;
             }
             res.json(dbUsersData);
         })
         .catch(err => res.status(400).json(err));
     },
+
+    addFriend({params}, res) {
+        Users.findOneAndUpdate({_id: params.id}, {$push: { friends: params.friendId}}, {new: true})
+        .populate({path: 'friends', select: ('-__v')})
+        .select('-__v')
+        .then(dbUsersData => {
+            if (!dbUsersData) {
+                res.status(404).json({message: 'No User found!'});
+                return;
+            }
+        res.json(dbUsersData);
+        })
+        .catch(err => res.json(err));
+    },
+
+    deleteFriend({ params }, res) {
+        Users.findOneAndUpdate({_id: params.id}, {$pull: { friends: params.friendId}}, {new: true})
+        .populate({path: 'friends', select: '-__v'})
+        .select('-__v')
+        .then(dbUsersData => {
+            if(!dbUsersData) {
+                res.status(404).json({message: 'No User found!'});
+                return;
+            }
+            res.json(dbUsersData);
+        })
+        .catch(err => res.status(400).json(err));
+    }
+
 };
 
 module.exports = usersController;
