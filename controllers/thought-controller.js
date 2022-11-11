@@ -1,5 +1,5 @@
 const {Thoughts, Users} = require('../models');
-
+//thoughts post,get,delete
 const thoughtsController = {
 
     createThoughts({params, body}, res) {
@@ -34,7 +34,7 @@ const thoughtsController = {
         .select('-__v')
         .then(dbThoughtsData => {
             if(!dbThoughtsData) {
-            res.status(404).json({message: 'No ID found!'});
+            res.status(404).json({message: 'No thoughts found!'});
             return;
         }
         res.json(dbThoughtsData)

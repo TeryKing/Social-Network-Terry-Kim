@@ -1,5 +1,5 @@
 const {Users} = require('../models');
-
+//user post, get, delete
 const usersController ={
     createUsers({body}, res) {
         Users.create(body)

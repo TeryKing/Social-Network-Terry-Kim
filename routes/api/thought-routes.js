@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+//making routes for thoughts and reactions
 const {
     getAllThoughts,
     getThoughtsById,
