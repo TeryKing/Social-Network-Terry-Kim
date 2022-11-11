@@ -11,7 +11,8 @@ app.use(express.static('public'));
 
 app.use(require('./routes'));
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/Social-Network-Terry-Kim',{
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Social-Network-Terry-Kim',{
     useFindAndModify: false,
     userNewUrlParser: true,
     useUnifiedTopology: true
