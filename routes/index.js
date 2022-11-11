@@ -4,8 +4,8 @@ const apiRoutes = require('./api');
 
 router.use('/api',apiRoutes);
 
-router.unsubscribe((req,res)=>{
-    res.status(404).send('Error has occurred');
+router.use((req,res)=>{
+    res.send('Wrong Routes');
 });
 
 module.exports = router;
